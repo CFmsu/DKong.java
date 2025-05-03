@@ -33,6 +33,9 @@ public class KeyboardInputs implements KeyListener {
             case KeyEvent.VK_D:
                 panel.getGame().getMario().setDirection(RIGHT);
                 break;
+
+            case KeyEvent.VK_SPACE:
+                panel.getGame().getMario().jump();
         }
 
     }

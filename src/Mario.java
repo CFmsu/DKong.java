@@ -1,3 +1,4 @@
+import Util.Physics;
 import entities.Entity;
 
 import javax.imageio.ImageIO;
@@ -18,13 +19,19 @@ public class Mario extends Entity {
     private int action = IDLE;
     private int playerDirection = -1;
     private boolean move = false;
+    private boolean isFalling = false;
     private int [][] lvlData;
-    private float xOffset = 21 * Game.tileScale;
-    private float yOffset = 4 * Game.tileScale;
+
+    private Physics physics;
+    private static final float groundLevel = 905;
+
 
     public Mario(float x, float y, int width, int height) {
         super(x, y, width, height);
         loadAnims();
+
+        physics = new Physics();
+        physics.setGround(groundLevel);
     }
 
     public void update() {
@@ -38,7 +45,7 @@ public class Mario extends Entity {
 
     public void render(Graphics graphic) {
 
-        graphic.drawImage(animations[RUNNING][animIndex], (int) (x), (int) (y), width, height, null);
+        graphic.drawImage(animations[action][animIndex], (int) (x), (int) (y), width, height, null);
         drawHitbox(graphic);
 
     }
@@ -60,11 +67,11 @@ public class Mario extends Entity {
 
         //these animations are coded in the order that they occur in on the sprite sheet
 
-        BufferedImage[] idle = new BufferedImage[]{moveAnim[0]}; //The idle sprite is the same sprite as the first sprite in the moving animation
-
         for (int i = 0; i < moveAnim.length; i++) {
             moveAnim[i] = spriteSheet.getSubimage(i * 19, 128, width -1, height -2);
         }
+
+        BufferedImage[] idle = new BufferedImage[]{moveAnim[0]}; //The idle sprite is the same sprite as the first sprite in the moving animation
 
         for (int i = 0; i < climbAnim.length; i++) {
             climbAnim[i] = spriteSheet.getSubimage(i * 20, 150, width, height);
@@ -95,6 +102,63 @@ public class Mario extends Entity {
 
     }
 
+
+    public void updatePos() {
+
+        float[] newPosition = physics.doPhysics(x, y);
+
+        x = newPosition[0];
+        y = newPosition[1];
+        int moveSpeed = 1;
+
+        if (move) {
+            switch (playerDirection) {
+                case LEFT:
+                    x -= moveSpeed;
+                    break;
+
+                case UP:
+                    y -= moveSpeed;
+                    break;
+
+                case RIGHT:
+                    x += moveSpeed;
+                    break;
+
+                case DOWN:
+                    y += moveSpeed;
+                    break;
+
+            }
+
+        }
+    }
+
+    public void jump(){
+        physics.jump(2.5F);
+    }
+
+    private void animUpdate() {
+
+        animTick++;
+        int animFrames = getAnimAmount(action);
+
+        //For animations with 1 frame (jumping specifically) this prevents the animation from
+        //switching to a different one too fast
+        if(animFrames <= 1){
+            return;
+        }
+
+        if (animTick >= animSpeed) {
+            animTick = 0;
+            animIndex++;
+
+            if (animIndex >= animFrames) {
+                animIndex = 0;
+            }
+        }
+    }
+
     public void setDirection(int direction) {
         this.playerDirection = direction;
         move = true;
@@ -105,49 +169,28 @@ public class Mario extends Entity {
     }
 
     private void setAnimation() {
-
-        if (move) {
-            action = RUNNING;
-        } else {
-            action = IDLE;
+        int actionUpdate = 1;
+        if (isAirborne()){
+            actionUpdate = JUMPING;
         }
-    }
 
-    public void updatePos() {
-
-        if (move) {
-            switch (playerDirection) {
-                case LEFT:
-                    x -= 1;
-                    break;
-
-                case UP:
-                    y -= 1;
-                    break;
-
-                case RIGHT:
-                    x += 1;
-                    break;
-
-                case DOWN:
-                    y += 1;
-                    break;
-
-            }
+        else if (move) {
+            actionUpdate = RUNNING;
         }
-    }
 
-    private void animUpdate() {
+        else {
+            actionUpdate = IDLE;
+        }
 
-        animTick++;
-
-        if (animTick >= animSpeed) {
+        if(action != actionUpdate){
+            action = actionUpdate;
+            animIndex = 0;
             animTick = 0;
-            animIndex++;
 
-            if (animIndex >= getAnimAmount(action)) {
-                animIndex = 0;
-            }
         }
+    }
+
+    public boolean isAirborne(){
+        return physics.isAirborne();
     }
 }
