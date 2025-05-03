@@ -21,6 +21,7 @@ public class Mario extends Entity {
     private boolean move = false;
     private boolean isFalling = false;
     private int [][] lvlData;
+    private boolean facingRight = true;
 
     private Physics physics;
     private static final float groundLevel = 905;
@@ -44,10 +45,18 @@ public class Mario extends Entity {
     }
 
     public void render(Graphics graphic) {
+        BufferedImage currentFrame = animations[action][animIndex];
 
-        graphic.drawImage(animations[action][animIndex], (int) (x), (int) (y), width, height, null);
-        drawHitbox(graphic);
+        if(facingRight) {
+            graphic.drawImage(currentFrame, (int)(x + width), (int) y, (int)x, (int)(y + height),
+                    0, 0, currentFrame.getWidth(), currentFrame.getHeight(), null);
+        }
+        //flips Mario's sprites if Mario's sprites aren't going right.
+        else{
+            graphic.drawImage(currentFrame, (int) (x), (int) (y), width, height, null);
+        }
 
+       drawHitbox(graphic);
     }
 
     private void loadAnims() {
@@ -162,6 +171,13 @@ public class Mario extends Entity {
     public void setDirection(int direction) {
         this.playerDirection = direction;
         move = true;
+
+        if(direction == RIGHT){
+            facingRight = true;
+        }
+        else{
+            facingRight = false;
+        }
     }
 
     public void setMove(boolean move) {
