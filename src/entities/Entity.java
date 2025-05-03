@@ -8,35 +8,39 @@ public abstract class Entity {
     protected final int width;
     protected final int height;
     protected float x, y;
-    protected Rectangle2D.Float hitbox;
+    protected Rectangle hitbox;
+
     public Entity(float x, float y, int width, int height){
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+
+        hitbox = new Rectangle((int) x, (int) y, width, height);
     }
 
-    protected void makeHitBox(float x, float y, float width, float height){
-        hitbox = new Rectangle2D.Float((int) x, (int) y, width, height);
+    public void drawHitbox(Graphics graphic){
+        graphic.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
     }
 
-    protected void updateHitBox(){
-        hitbox.x = (int)x;
-        hitbox.y = (int)y;
+    public void updateHitBox(){
+        hitbox.setBounds((int)x, (int)y, width, height);
     }
 
 
 
-    protected void drawHitbox(Graphics graphic){
-        graphic.drawRect((int)hitbox.x, (int)hitbox.y, (int)hitbox.width, (int)hitbox.height);
+    public boolean checkIntersection(Entity entity){
+        Rectangle hitboxA = this.getHitbox();
+        Rectangle hitboxB = entity.getHitbox();
+
+        if(hitboxA.intersects(hitboxB)){
+            return true;
+        }
+        return false;
     }
 
-    public Rectangle2D.Float getHitbox(){
+    public Rectangle getHitbox(){
         return hitbox;
-    }
-
-    public void setHitbox(Rectangle2D.Float hitbox) {
-        this.hitbox = hitbox;
     }
 
     public int getWidth() {
@@ -54,4 +58,5 @@ public abstract class Entity {
     public float getY() {
         return y;
     }
+
 }

@@ -8,8 +8,6 @@ public class Game implements Runnable {
     private final int fps = 120;
     private final int ups = 200;
     private Mario mario;
-    private Rail[] rails;
-    private Rail rail1, rail2, rail3, rail4, rail5, rail6;
     private LevelHandler levelHandler;
     //Below attributes calculate the size of a window as a grid to make placing entities easier
     public final static int tileStartSize = 32;
@@ -34,21 +32,11 @@ public class Game implements Runnable {
 
     private void initiateClasses() {
         levelHandler = new LevelHandler(this);
-        mario = new Mario(800, 910, 100, 100);
-
-        rail1 = new Rail(0, 1000, 100, 100);
-        rail2 = (new Rail(400, 800, 100, 100));
-        rail3 = (new Rail(-500, 600, 100, 100));
-        rail4 = (new Rail(400, 450, 100, 100));
-        rail5 = (new Rail(-200, 250, 100, 100));
-        rail6 = (new Rail(150, 100, 100, 100));
-
-        rails = new Rail[]{rail1, rail2, rail3, rail4, rail5, rail6};
-
+        levelHandler.makeAllRails();
+        mario = new Mario(800, 900, 100, 100);
 
     }
 
-    //
     private void startLoop() {
 
         gameLoop = new Thread(this);
@@ -65,12 +53,7 @@ public class Game implements Runnable {
 
         mario.render(graphic);
 
-        for(int i = 0; i < rails.length; i++){
-
-            rails[i].drawRail(rails[i], graphic);
-
-        }
-
+        levelHandler.drawAllRails(graphic);
     }
 
     @Override

@@ -8,30 +8,25 @@ import java.util.ArrayList;
 
 public class Rail extends Entity {
 
-    private ArrayList<Entity> railList;
-    private float x, y;
-    private int width, height;
     private BufferedImage railSprite, smallRailSprite;
-    private Rectangle2D.Float hitbox;
-
 
     public Rail(float x, float y, int width, int height) {
         super(x, y, width, height);
 
-        setHitbox(hitbox);
+        hitbox = new Rectangle((int)x, (int)y, width, height);
 
     }
 
-    public void drawRail(Rail rail, Graphics graphic) {
+    public void drawRail(Graphics graphic) {
+        if(railSprite == null) {
 
-        BufferedImage image = LoadSave.getSprites(LoadSave.levelSprites);
+            BufferedImage image = LoadSave.getSprites(LoadSave.levelSprites);
+            railSprite = image.getSubimage(0, 703, 1167, 40);
 
-        railSprite = LoadSave.getSprites(LoadSave.levelSprites);
-        railSprite = image.getSubimage(0, 703, 1167, 40);
+        }
 
-        graphic.drawImage(railSprite, (int) rail.getX(), (int) rail.getY(), null);
-
-        hitbox = new Rectangle2D.Float(x, y,width,height);
+        graphic.drawImage(railSprite, (int) x, (int) y,null);
+        drawHitbox(graphic);
     }
 
 }

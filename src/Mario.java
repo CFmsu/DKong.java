@@ -2,6 +2,7 @@ import entities.Entity;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,7 +25,6 @@ public class Mario extends Entity {
     public Mario(float x, float y, int width, int height) {
         super(x, y, width, height);
         loadAnims();
-        makeHitBox(x, y, width, height);
     }
 
     public void update() {
@@ -114,6 +114,7 @@ public class Mario extends Entity {
     }
 
     public void updatePos() {
+
         if (move) {
             switch (playerDirection) {
                 case LEFT:
