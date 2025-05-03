@@ -13,8 +13,6 @@ public class Rail extends Entity {
     public Rail(float x, float y, int width, int height) {
         super(x, y, width, height);
 
-        hitbox = new Rectangle((int)x, (int)y, width, height);
-
     }
 
     public void drawRail(Graphics graphic) {
@@ -24,9 +22,7 @@ public class Rail extends Entity {
             railSprite = image.getSubimage(0, 703, 1167, 40);
 
         }
-
         graphic.drawImage(railSprite, (int) x, (int) y,null);
-        drawHitbox(graphic);
     }
 
 }

@@ -54,6 +54,7 @@ public class Game implements Runnable {
         mario.render(graphic);
 
         levelHandler.drawAllRails(graphic);
+        levelHandler.createAllPlatforms(graphic);
     }
 
     @Override

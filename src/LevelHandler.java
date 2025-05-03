@@ -1,4 +1,5 @@
 import entities.Entity;
+import org.w3c.dom.css.Rect;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,6 +12,7 @@ public class LevelHandler {
     private BufferedImage railSprite, smallRailSprite;
     private Level level;
     private ArrayList<Rail> railList = new ArrayList<>();
+    private ArrayList<Rectangle> platformList = new ArrayList<>();
 
 
     public LevelHandler(Game game) {
@@ -42,6 +44,22 @@ public class LevelHandler {
         for(Rail rail : railList){
             rail.updateHitBox();
             rail.drawRail(graphic);
+        }
+    }
+
+    //Invisible platforms for making sure entities are standing on them.
+    public void createPlatform(Rail rail){
+        platformList.add(new Rectangle((int) rail.getX(), (int) rail.getY(), rail.getWidth(), rail.getHeight()));
+
+    }
+
+    public void createAllPlatforms(Graphics graphic){
+        for(Rail rail : railList){
+            createPlatform(rail);
+        }
+
+        for(Rectangle platform : platformList){
+            graphic.drawRect(platform.x, platform.y, platform.width, platform.height);
         }
     }
 
