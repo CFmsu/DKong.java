@@ -49,7 +49,7 @@ public class LevelHandler {
 
     //Invisible platforms for making sure entities are standing on them.
     public void createPlatform(Rail rail){
-        platformList.add(new Rectangle((int) rail.getX(), (int) rail.getY(), rail.getWidth(), rail.getHeight()));
+        platformList.add(new Rectangle((int) rail.getX() + 10, (int) (rail.getY() + 5), (int)(rail.getWidth() * 11.5), (int) (rail.getHeight() * .3)));
 
     }
 
