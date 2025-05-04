@@ -52,6 +52,7 @@ public class Collision {
                 physics.setAirborne(true);
             }
         }
-        return new float[]{tempHitbox.x, tempHitbox.y};
+
+        return new float[]{tempX, tempY};
     }
 }

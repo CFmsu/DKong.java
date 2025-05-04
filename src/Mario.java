@@ -39,7 +39,7 @@ public class Mario extends Entity {
 
         physics.doGravity();
 
-        float[]newPos = Collision.checkNewPos(x, y - 1, physics, hitbox, platforms);
+        float[]newPos = Collision.checkNewPos(x, y, physics, hitbox, platforms);
         x = newPos[0];
         y = newPos[1];
 
@@ -149,7 +149,7 @@ public class Mario extends Entity {
 
     public void jump(){
         if(!physics.isAirborne()){
-            physics.jump(2.5F);
+            physics.jump(4F);
         }
     }
 
