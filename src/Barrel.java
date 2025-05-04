@@ -17,12 +17,22 @@ public class Barrel extends Entity {
     public void makeBarrelAnims(Graphics graphic) {
         if(barrelSprite == null) {
 
-            BufferedImage image = LoadSave.getSprites(LoadSave.barrelSprites);
+            BufferedImage image = LoadSave.getSprites(LoadSave.playerSprites);
              barrelSprite = image.getSubimage(177, 155, 14, 10);
              barrelRoll = image.getSubimage(197, 155, 14, 10);
 
             animations = new BufferedImage[]{barrelSprite, barrelRoll};
 
         }
+    }
+
+    public void drawBarrel(Graphics graphic){
+        if(animations != null && animations.length > 0){
+            graphic.drawImage(animations[0], (int) getX(), (int) getY(), getWidth(), getHeight(), null);
+        }
+    }
+
+    public BufferedImage[] getAnimations() {
+        return animations;
     }
 }

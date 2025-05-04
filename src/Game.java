@@ -33,6 +33,7 @@ public class Game implements Runnable {
     private void initiateClasses() {
         levelHandler = new LevelHandler(this);
         levelHandler.makeAllRails();
+        levelHandler.makeBarrel(200, 800, 14, 10);
         mario = new Mario(200, 905, 100, 100);
 
     }
@@ -47,7 +48,7 @@ public class Game implements Runnable {
     public void update() {
         Rectangle[] platforms = levelHandler.getPlatformList();
         mario.update(platforms);
-        levelHandler.update();
+        levelHandler.updateBarrels();
     }
 
     public void render(Graphics graphic) {
@@ -56,6 +57,7 @@ public class Game implements Runnable {
 
         levelHandler.drawAllRails(graphic);
         levelHandler.createAllPlatforms(graphic);
+        levelHandler.drawAllBarrels(graphic);
     }
 
     @Override

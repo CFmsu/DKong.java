@@ -6,21 +6,23 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.nio.Buffer;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class LevelHandler {
     private Game game;
     private Rail rail;
     private BufferedImage railSprite, smallRailSprite;
     private Barrel barrel;
-    private ArrayList<Barrel> barrels;
     private Level level;
+
+    private ArrayList<Barrel> barrels;
     private ArrayList<Rail> railList = new ArrayList<>();
     private ArrayList<Rectangle> platformList = new ArrayList<>();
 
 
     public LevelHandler(Game game) {
         this.game = game;
-        //levelSprite = LoadSave.getSprites(LoadSave.levelSprites);
+        barrels = new ArrayList<>();
     }
 
     public Level getCurrentLevel() {
@@ -49,6 +51,15 @@ public class LevelHandler {
         }
     }
 
+    public void drawAllBarrels(Graphics graphic){
+        for(Barrel barrel : barrels){
+
+            barrel.makeBarrelAnims(graphic);
+            barrel.drawBarrel(graphic);
+
+        }
+    }
+
     //Invisible platforms for making sure entities are standing on them.
     public void createPlatform(Rail rail){
         platformList.add(new Rectangle((int) rail.getX() + 10, (int) (rail.getY() + 5), (int)(rail.getWidth() * 11.5), (int) (rail.getHeight() * .1)));
@@ -65,12 +76,21 @@ public class LevelHandler {
         }
     }
 
-    public void makeBarrels(Barrel barrel){
-        barrels.add(barrel);
+    public void makeBarrel(float x, float y, int width, int height){
+        Barrel newBarrel = new Barrel(x, y, width, height);
+        barrels.add(newBarrel);
     }
 
-    public void update() {
+    public void updateBarrels() {
 
+        Iterator<Barrel> i = barrels.iterator();
+        while(i.hasNext()){
+
+            Barrel barrel = i.next();
+            barrel.setY(barrel.getY() + 5);
+            barrel.updateHitBox();
+
+        }
     }
 
     public Rail getRail() {
