@@ -33,7 +33,7 @@ public class Game implements Runnable {
     private void initiateClasses() {
         levelHandler = new LevelHandler(this);
         levelHandler.makeAllRails();
-        mario = new Mario(800, 905, 100, 100);
+        mario = new Mario(200, 905, 100, 100);
 
     }
 

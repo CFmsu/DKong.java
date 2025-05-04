@@ -16,7 +16,6 @@ public class Physics {
     public void doGravity() {
 
         //if an entity is airborne, it will jump slowly but fall faster
-
         if (airborne) {
             float floatGravity = gravity;
 
@@ -37,15 +36,6 @@ public class Physics {
         doGravity();
         x += xAirSpeed;
         y += yAirSpeed;
-        /*
-        if (y >= ground) {
-            y = ground;
-            stopPhysicsY();
-
-        }
-
-         */
-        //updates the position of an entity
         return new float[]{x, y};
     }
 
@@ -67,7 +57,10 @@ public class Physics {
         if(standing) {
 
             airborne = false;
-            yAirSpeed = 0F;
+
+            if(yAirSpeed > 0){
+                yAirSpeed = 0F;
+            }
         }
         else{
             airborne = true;

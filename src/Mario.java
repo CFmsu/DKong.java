@@ -1,5 +1,7 @@
+import Util.Collision;
 import Util.Physics;
 import entities.Entity;
+import org.w3c.dom.css.Rect;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -34,14 +36,16 @@ public class Mario extends Entity {
 
         animUpdate();
         setAnimation();
+
+        physics.doGravity();
+
+        float[]newPos = Collision.checkNewPos(x, y - 1, physics, hitbox, platforms);
+        x = newPos[0];
+        y = newPos[1];
+
         updatePos();
         updateHitBox();
 
-        boolean isOnground = isOnGround(hitbox, platforms);
-
-        if(isOnground){
-            physics.stopPhysicsY();
-        }
     }
 
     public void render(Graphics graphic) {
@@ -74,7 +78,7 @@ public class Mario extends Entity {
         int width = 18;
         int height = 20;
 
-        //these animations are coded in the order that they occur in on the sprite sheet
+        //these animations are coded in the order that they occur in on the sprite sheet, excluding idle because it needs the jump sprites.
 
         for (int i = 0; i < moveAnim.length; i++) {
             moveAnim[i] = spriteSheet.getSubimage(i * 19, 128, width -1, height -2);
@@ -189,6 +193,7 @@ public class Mario extends Entity {
 
     public void setMove(boolean move) {
         this.move = move;
+        physics.setXAirSpeed(0);
     }
 
     private void setAnimation() {

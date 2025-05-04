@@ -28,20 +28,6 @@ public abstract class Entity {
         hitbox.setBounds((int)x, (int)y, width, height);
     }
 
-    public boolean isOnGround(Rectangle hitbox, Rectangle[] platforms) {
-
-        for (Rectangle platform : platforms) {
-
-            if(hitbox.intersects(platform)){
-                if(hitbox.getMaxY() <= platform.getMinY()){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-
     public Rectangle getHitbox(){
         return hitbox;
     }
