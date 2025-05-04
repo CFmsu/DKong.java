@@ -1,12 +1,8 @@
 import Util.Physics;
 import entities.Entity;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
 import static Util.Constant.PlayerConstants.*;
 import static Util.Constant.PlayerConstants.Directions.*;
@@ -24,7 +20,7 @@ public class Mario extends Entity {
     private boolean facingRight = true;
 
     private Physics physics;
-    private static final float groundLevel = 905;
+    private static  final float pit = 905;
 
 
     public Mario(float x, float y, int width, int height) {
@@ -32,16 +28,20 @@ public class Mario extends Entity {
         loadAnims();
 
         physics = new Physics();
-        physics.setGround(groundLevel);
     }
 
-    public void update() {
+    public void update(Rectangle[] platforms) {
 
         animUpdate();
         setAnimation();
         updatePos();
         updateHitBox();
 
+        boolean isOnground = isOnGround(hitbox, platforms);
+
+        if(isOnground){
+            physics.stopPhysicsY();
+        }
     }
 
     public void render(Graphics graphic) {
@@ -144,7 +144,9 @@ public class Mario extends Entity {
     }
 
     public void jump(){
-        physics.jump(2.5F);
+        if(!physics.isAirborne()){
+            physics.jump(2.5F);
+        }
     }
 
     private void animUpdate() {
@@ -166,6 +168,11 @@ public class Mario extends Entity {
                 animIndex = 0;
             }
         }
+    }
+
+    public void fallIntoPit() {
+        x = 800;
+        y = 905;
     }
 
     public void setDirection(int direction) {

@@ -1,5 +1,7 @@
 package Util;
 
+import java.awt.*;
+
 public class Physics {
 
     private float gravity = 0.2F;
@@ -8,9 +10,10 @@ public class Physics {
     private float ground = 900F;
     private float xAirSpeed = 0F, yAirSpeed = 0F;
     private boolean airborne = false;
+    private boolean isOnGround = true;
 
 
-    private void doGravity() {
+    public void doGravity() {
 
         //if an entity is airborne, it will jump slowly but fall faster
 
@@ -34,18 +37,16 @@ public class Physics {
         doGravity();
         x += xAirSpeed;
         y += yAirSpeed;
-
+        /*
         if (y >= ground) {
             y = ground;
             stopPhysicsY();
 
         }
+
+         */
         //updates the position of an entity
         return new float[]{x, y};
-    }
-
-    public void setGround(float ground){
-        this.ground = ground;
     }
 
     public void stopPhysicsY(){
@@ -58,6 +59,17 @@ public class Physics {
         if(!airborne){
             //negative jump height will have entity jump upward.
             yAirSpeed = -jumpHeight;
+            airborne = true;
+        }
+    }
+
+    public void isStanding(boolean standing){
+        if(standing) {
+
+            airborne = false;
+            yAirSpeed = 0F;
+        }
+        else{
             airborne = true;
         }
     }
@@ -85,4 +97,9 @@ public class Physics {
     public void setAirborne(boolean airborne) {
         this.airborne = airborne;
     }
+
+    public void setGround(float ground){
+        this.ground = ground;
+    }
+
 }

@@ -70,4 +70,8 @@ public class LevelHandler {
     public Rail getRail() {
         return rail;
     }
+
+    public Rectangle[] getPlatformList() {
+        return platformList.toArray(new Rectangle[0]);
+    }
 }

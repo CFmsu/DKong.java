@@ -45,7 +45,8 @@ public class Game implements Runnable {
     }
 
     public void update() {
-        mario.update();
+        Rectangle[] platforms = levelHandler.getPlatformList();
+        mario.update(platforms);
         levelHandler.update();
     }
 

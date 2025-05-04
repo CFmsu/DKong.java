@@ -2,6 +2,7 @@ package entities;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.lang.reflect.Array;
 
 public abstract class Entity {
 
@@ -27,17 +28,19 @@ public abstract class Entity {
         hitbox.setBounds((int)x, (int)y, width, height);
     }
 
+    public boolean isOnGround(Rectangle hitbox, Rectangle[] platforms) {
 
+        for (Rectangle platform : platforms) {
 
-    public boolean checkIntersection(Entity entity){
-        Rectangle hitboxA = this.getHitbox();
-        Rectangle hitboxB = entity.getHitbox();
-
-        if(hitboxA.intersects(hitboxB)){
-            return true;
+            if(hitbox.intersects(platform)){
+                if(hitbox.getMaxY() <= platform.getMinY()){
+                    return true;
+                }
+            }
         }
         return false;
     }
+
 
     public Rectangle getHitbox(){
         return hitbox;
