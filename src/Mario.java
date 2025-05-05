@@ -19,7 +19,6 @@ public class Mario extends Entity {
     private boolean move = false;
     private boolean isFalling = false;
     private int [][] lvlData;
-    private boolean facingRight = true;
 
 
     public Mario(float x, float y, int width, int height) {

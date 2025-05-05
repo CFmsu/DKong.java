@@ -81,7 +81,7 @@ public class LevelHandler {
     public void makeBarrel(float x, float y, int width, int height){
         barrels.add(new Barrel(x, y, width, height));
     }
-    //values needed for making new barrels at a set interval
+    //values needed for making new barrels at a set interval each update
     public void updateBarrels(int x, int y, int width, int height) {
 
         Iterator<Barrel> i = barrels.iterator();
@@ -90,6 +90,11 @@ public class LevelHandler {
             Barrel barrel = i.next();
             barrel.doBarrelPhysics(getPlatformList());
             barrel.updateHitBox();
+
+            if(barrel.pitFallCheck((int)barrel.getY(), getPlatformList())){
+                i.remove();
+                System.out.println("Barrel removed");
+            }
 
         }
         barrelTimer++;

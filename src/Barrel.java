@@ -17,6 +17,7 @@ public class Barrel extends Entity {
         super(x, y, width, height);
 
         physics.setAirborne(true);
+
     }
 
     public void makeBarrelAnims(Graphics graphic) {
@@ -40,26 +41,45 @@ public class Barrel extends Entity {
 
     public void doBarrelPhysics(Rectangle[] platforms){
 
+        if(facingRight){
+            physics.setXAirSpeed(1);
+        }
+        else{
+            physics.setXAirSpeed(-1);
+        }
+
+        //this is needed or else the barrels go too fast
         physics.setXAirSpeed(1);
 
         float[] newPosition = physics.doPhysics(x, y);
         float newX = newPosition[0];
         float newY = newPosition[1];
 
-        float[] checkPosition = Collision.checkNewPos(newX, newY, physics, hitbox, platforms);
+        swapDirection(platforms);
+
         if(!physics.isStanding(Collision.isOnGround(hitbox, platforms)) && physics.getYAirSpeed() == 0){
             physics.setXAirSpeed(0);
             physics.setYAirSpeed(1);
         }
+
+        float[] checkPosition = Collision.checkNewPos(newX, newY, physics, hitbox, platforms);
 
         setX(newX);
         setY(newY);
 
     }
 
+    public void swapDirection(Rectangle[] platforms){
+        for(Rectangle platform : platforms){
+            if(!hitbox.intersects(platform) && physics.getYAirSpeed() > 0){
+                setFacingRight(!facingRight);
+                physics.stopPhysicsY();
+                break;
+            }
+        }
+    }
+
     public BufferedImage[] getAnimations() {
         return animations;
     }
-
-
 }
