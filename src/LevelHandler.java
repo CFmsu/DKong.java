@@ -15,7 +15,7 @@ public class LevelHandler {
     private Barrel barrel;
     private Level level;
     int barrelTimer = 0;
-    int timeToMakeBarrel = 1200;
+    int timeToMakeBarrel = 1400;
 
     private ArrayList<Barrel> barrels;
     private ArrayList<Rail> railList = new ArrayList<>();

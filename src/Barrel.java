@@ -9,7 +9,6 @@ public class Barrel extends Entity {
     private BufferedImage barrelSprite, barrelRoll;
     private BufferedImage[] animations;
 
-
     public Barrel(float x, float y, int width, int height) {
         super(x, y, width, height);
 
@@ -49,14 +48,9 @@ public class Barrel extends Entity {
             physics.setXAirSpeed(-2);
         }
 
+        //if the barrel is on the ground, it's forced to "hug" the platform until it falls down
         if(standing){
-            for(Rectangle platform : platforms){
-                if(hitbox.intersects(platform)){
-                    setY(platform.y - hitbox.height);
-                    updateHitBox();
-                    break;
-                }
-            }
+            forceFalling(platforms);
             physics.stopPhysicsY();
             physics.setAirborne(false);
         }
@@ -77,13 +71,24 @@ public class Barrel extends Entity {
         updateHitBox();
     }
 
-    public boolean swapDirection(Rectangle[] platforms){
+    private boolean swapDirection(Rectangle[] platforms){
         for(Rectangle platform : platforms){
             if(!hitbox.intersects(platform) && physics.getYAirSpeed() > 0){
                 return true;
             }
         }
         return false;
+    }
+
+    private void forceFalling(Rectangle[] platforms){
+
+        for(Rectangle platform : platforms){
+            if(hitbox.intersects(platform)){
+                setY(platform.y - hitbox.height);
+                updateHitBox();
+                break;
+            }
+        }
     }
 
     public BufferedImage[] getAnimations() {
