@@ -74,6 +74,11 @@ public abstract class Entity {
         this.y = y;
     }
 
+    public void setPos(int newX, int newY) {
+        x = newX;
+        y = newY;
+    }
+
     public void setFacingRight(boolean facingRight) {
         this.facingRight = facingRight;
     }

@@ -1,6 +1,8 @@
 package Util;
 
 
+import entities.Entity;
+
 import java.awt.*;
 
 public class Collision {
@@ -52,5 +54,11 @@ public class Collision {
         return new float[]{tempX, tempY};
     }
 
+    public static boolean checkEntCollision(Entity mario, Entity entity){
 
+        if(mario.getHitbox().intersects(entity.getHitbox())){
+            return true;
+        }
+        return false;
+    }
 }

@@ -1,3 +1,5 @@
+import Util.Collision;
+
 import java.awt.*;
 
 public class Game implements Runnable {
@@ -9,8 +11,8 @@ public class Game implements Runnable {
     private final int ups = 200;
     private Mario mario;
     private LevelHandler levelHandler;
-    private int barrelTimer = 0;
-    private int timeToMakeBarrel = 10;
+    private int msgTimer = 0;
+    private int msgStop = 450;
     //Below attributes calculate the size of a window as a grid to make placing entities easier
     public final static int tileStartSize = 32;
     public final static float tileScale = 1.5F;
@@ -51,16 +53,29 @@ public class Game implements Runnable {
         Rectangle[] platforms = levelHandler.getPlatformList();
         mario.update(platforms);
         levelHandler.updateBarrels(200, 120, 70, 60);
-        barrelTimer++;
+
     }
 
     public void render(Graphics graphic) {
+
+        if(mario.deathFlag){
+            msgTimer++;
+            mario.marioReset(levelHandler.getBarrels());
+            mario.drawMarioDeath(graphic, msgTimer, msgStop);
+            //coordinates spawning the first new barrel with when the death screen stops
+            levelHandler.setBarrelTimer(1200);
+        }
+
+        if(!mario.deathFlag){
+            msgTimer = 0;
+        }
 
         mario.render(graphic);
 
         levelHandler.drawAllRails(graphic);
         levelHandler.createAllPlatforms(graphic);
         levelHandler.drawAllBarrels(graphic);
+
     }
 
     @Override
@@ -111,4 +126,5 @@ public class Game implements Runnable {
     public Mario getMario() {
         return mario;
     }
+
 }

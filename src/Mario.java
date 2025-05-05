@@ -1,10 +1,9 @@
 import Util.Collision;
-import Util.Physics;
 import entities.Entity;
-import org.w3c.dom.css.Rect;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import static Util.Constant.PlayerConstants.*;
 import static Util.Constant.PlayerConstants.Directions.*;
@@ -18,6 +17,7 @@ public class Mario extends Entity {
     private int playerDirection = -1;
     private boolean move = false;
     private boolean isFalling = false;
+    public boolean deathFlag = false;
     private int [][] lvlData;
 
 
@@ -40,18 +40,17 @@ public class Mario extends Entity {
         updatePos();
         updateHitBox();
         physics.isStanding(Collision.isOnGround(hitbox, platforms));
-        //logic for Mario falling into pit. Placeholder for now as it isn't a top priority
-        if(pitFallCheck((int) y, platforms)){
-            System.out.println("\nMario fell to his death");
-            x = 200;
-            y = 900;
-        }
 
         //When jumping, Mario gets a small speed boost to help jump over barrels. After he jumps, this sets Mario's X speed back to normal
         if(!isAirborne()){
             physics.setXAirSpeed(0F);
         }
 
+        //logic for Mario falling into pit. Placeholder for now as it isn't a top priority
+        if(pitFallCheck((int) y, platforms)){
+            System.out.println("\nMario fell to his death");
+            deathFlag = true;
+        }
     }
 
     public void render(Graphics graphic) {
@@ -188,9 +187,41 @@ public class Mario extends Entity {
         }
     }
 
-    public void fallIntoPit() {
-        x = 800;
-        y = 905;
+    public void marioReset(){
+        setPos(200, 905);
+    }
+
+    public void marioReset(ArrayList<Barrel> barrels){
+        //Resets the position of Mario and forces barrel deletion, simulating a level restart
+        //will not raise death flag because level also resets on win
+        marioReset();
+        for(Entity barrel : barrels){
+            if(deathFlag){
+                barrel.setPos(9999, -1000);
+            }
+        }
+
+    }
+
+    public void drawMarioDeath(Graphics graphic, int timer, int stopper){
+        if(timer < stopper){
+            graphic.setColor(Color.RED);
+            graphic.setFont(new Font("Arial", Font.BOLD, 50));
+            graphic.drawString("You died!", 500, 500);
+            setPos(1000, -1000);
+        }
+        else{
+            deathFlag = false;
+            setPos(200, 905);
+            timer = 0;
+        }
+    }
+
+    public void deathHandler(ArrayList<Barrel> barrels){
+        if(!deathFlag){
+            marioReset(barrels);
+            deathFlag = true;
+        }
     }
 
     public void setDirection(int direction) {

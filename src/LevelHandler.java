@@ -1,3 +1,4 @@
+import Util.Collision;
 import entities.Entity;
 import org.w3c.dom.css.Rect;
 
@@ -13,9 +14,10 @@ public class LevelHandler {
     private Rail rail;
     private BufferedImage railSprite, smallRailSprite;
     private Barrel barrel;
-    private Level level;
-    int barrelTimer = 0;
-    int timeToMakeBarrel = 1400;
+    private int barrelTimer = 0;
+    private int timeToMakeBarrel = 1400;
+    private int msgTime = 0;
+    private int msgStop = 1000;
 
     private ArrayList<Barrel> barrels;
     private ArrayList<Rail> railList = new ArrayList<>();
@@ -25,14 +27,6 @@ public class LevelHandler {
     public LevelHandler(Game game) {
         this.game = game;
         barrels = new ArrayList<>();
-    }
-
-    public Level getCurrentLevel() {
-        return level;
-    }
-
-    public void setCurrentLevel(Level currentLevel) {
-        level = currentLevel;
     }
 
     public void makeAllRails() {
@@ -96,6 +90,10 @@ public class LevelHandler {
                 System.out.println("Barrel removed");
             }
 
+            if(Collision.checkEntCollision(game.getMario(), barrel)){
+                game.getMario().deathHandler(barrels);
+            }
+
         }
         barrelTimer++;
         if(barrelTimer >= timeToMakeBarrel){
@@ -110,5 +108,17 @@ public class LevelHandler {
 
     public Rectangle[] getPlatformList() {
         return platformList.toArray(new Rectangle[0]);
+    }
+
+    public ArrayList<Barrel> getBarrels() {
+        return barrels;
+    }
+
+    public int getTimeToMakeBarrel() {
+        return timeToMakeBarrel;
+    }
+
+    public void setBarrelTimer(int barrelTimer) {
+        this.barrelTimer = barrelTimer;
     }
 }
