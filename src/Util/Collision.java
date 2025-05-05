@@ -38,7 +38,7 @@ public class Collision {
             //If a platform is found when entity is airborne, keep entity on the platform and stop all physics.
             if(tempPlatform != null){
                 if(physics.getYAirSpeed() > 0){
-                    tempY = tempPlatform.y - hitbox.height;
+                    tempY = tempPlatform.y - hitbox.height + 1;
                     physics.stopPhysicsY();
                     physics.setAirborne(false);
                 }
@@ -46,14 +46,14 @@ public class Collision {
                     tempY = tempPlatform.y + tempPlatform.height;
                     physics.setYAirSpeed(0);
                     physics.setAirborne(true);
+                    return new float[]{tempX, tempY};
                 }
             }
             else{
                 physics.setAirborne(true);
             }
         }
+
         return new float[]{tempX, tempY};
     }
-
-
 }

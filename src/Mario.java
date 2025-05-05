@@ -42,11 +42,11 @@ public class Mario extends Entity {
         updatePos();
         updateHitBox();
         physics.isStanding(Collision.isOnGround(hitbox, platforms));
-        //logic for Mario falling into pit. Placeholder for now as it isn't a top priority
+
         if(pitFallCheck((int) y, platforms)){
             System.out.println("\nMario fell to his death");
             x = 200;
-            y = 905;
+            y = 900;
 
         }
 
