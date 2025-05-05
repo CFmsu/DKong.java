@@ -35,9 +35,9 @@ public abstract class Entity {
         hitbox.setBounds((int)x, (int)y, width, height);
     }
 
-    public static boolean pitFallCheck(int y){
+    public static boolean pitFallCheck(int y, Rectangle[] platforms){
+
         if(y > pit) {
-            System.out.println("Something fell into the pit");
             return true;
         }
         return false;
