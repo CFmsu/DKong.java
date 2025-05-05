@@ -39,7 +39,9 @@ public class Game implements Runnable {
         levelHandler.makeAllRails();
         levelHandler.makeBarrel(200, 120, 70, 60);
         mario = new Mario(200, 905, 100, 100);
+        levelHandler.makePaul(100, -10, 80, 100);
         levelHandler.makeAllSprings();
+
 
     }
 
@@ -53,12 +55,23 @@ public class Game implements Runnable {
     public void update() {
         Rectangle[] platforms = levelHandler.getPlatformList();
         mario.update(platforms);
+        levelHandler.updatePauline();
         levelHandler.updateBarrels(200, 120, 70, 60);
         levelHandler.updateSprings();
 
     }
 
     public void render(Graphics graphic) {
+
+        if(mario.winFlag){
+            msgTimer++;
+            mario.drawMarioWin(graphic, msgTimer, msgStop);
+            if(!mario.winFlag){
+                mario.marioReset(levelHandler.getBarrels());
+            }
+
+
+        }
 
         if(mario.deathFlag){
             msgTimer++;
@@ -68,12 +81,13 @@ public class Game implements Runnable {
             levelHandler.setBarrelTimer(1200);
         }
 
-        if(!mario.deathFlag){
+        //if this is removed, death messages won't appear for dying to barrels after the first death message
+        if(!mario.deathFlag && !mario.winFlag){
             msgTimer = 0;
         }
 
         mario.render(graphic);
-
+        levelHandler.drawPauline(graphic);
         levelHandler.drawAllRails(graphic);
         levelHandler.createAllPlatforms(graphic);
         levelHandler.drawAllBarrels(graphic);
@@ -118,7 +132,6 @@ public class Game implements Runnable {
 
             if (System.currentTimeMillis() - lastFpsCheck >= 1000) {
                 lastFpsCheck = System.currentTimeMillis();
-                System.out.println("FPS: " + fps + " UPS: " + updates);
                 fps = 0;
                 updates = 0;
 

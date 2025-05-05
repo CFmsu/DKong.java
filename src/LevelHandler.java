@@ -19,6 +19,8 @@ public class LevelHandler {
     private int msgTime = 0;
     private int msgStop = 1000;
 
+    //entities
+    private Pauline pauline;
     private ArrayList<Barrel> barrels;
     private ArrayList<Rail> railList = new ArrayList<>();
     private ArrayList<Rectangle> platformList = new ArrayList<>();
@@ -47,6 +49,14 @@ public class LevelHandler {
         springList.add(new Spring(450, 205, 50, 50));
     }
 
+    public void makePaul(int x, int y, int width, int height){
+        pauline = new Pauline(x, y, width, height);
+    }
+
+    public void drawPauline(Graphics graphic){
+        pauline.drawPaul(graphic);
+    }
+
     public void drawAllRails(Graphics graphic){
 
         for(Rail rail : railList){
@@ -65,7 +75,6 @@ public class LevelHandler {
             spring.drawSpring(graphic);
         }
     }
-
 
     //Invisible platforms for making sure entities are standing on them.
     public void createPlatform(Rail rail){
@@ -123,6 +132,11 @@ public class LevelHandler {
 
             }
         }
+    }
+
+    public void updatePauline(){
+        pauline.isMarioHere(game.getMario());
+
     }
 
 

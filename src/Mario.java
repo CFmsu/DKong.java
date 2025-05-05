@@ -18,8 +18,7 @@ public class Mario extends Entity {
     private boolean move = false;
     private boolean isFalling = false;
     public boolean deathFlag = false;
-    private int [][] lvlData;
-
+    public boolean winFlag = false;
 
     public Mario(float x, float y, int width, int height) {
         super(x, y, width, height);
@@ -48,7 +47,6 @@ public class Mario extends Entity {
 
         //logic for Mario falling into pit. Placeholder for now as it isn't a top priority
         if(pitFallCheck((int) y, platforms)){
-            System.out.println("\nMario fell to his death");
             deathFlag = true;
         }
     }
@@ -113,12 +111,6 @@ public class Mario extends Entity {
 
     }
 
-    public void loadLvlData(int[][] lvlData){
-        this.lvlData = lvlData;
-
-    }
-
-
     public void updatePos() {
 
         float[] newPosition = physics.doPhysics(x, y);
@@ -135,8 +127,6 @@ public class Mario extends Entity {
 
                 case UP:
                     y -= moveSpeed;
-                    //this is a placeholder that will be used for climbing up ladders, for now it makes Mario fly
-                    physics.stopPhysicsY();
                     break;
 
                 case RIGHT:
@@ -146,9 +136,7 @@ public class Mario extends Entity {
                 case DOWN:
                     y += moveSpeed;
                     break;
-
             }
-
         }
     }
 
@@ -216,6 +204,24 @@ public class Mario extends Entity {
             timer = 0;
         }
     }
+
+    public void drawMarioWin(Graphics graphic, int timer, int stopper){
+        if(timer < stopper){
+            graphic.setColor(Color.GREEN);
+            graphic.setFont(new Font("Arial", Font.BOLD, 50));
+            graphic.drawString("You win!", 600, 600);
+            setPos((int) x, (int) y);
+        }
+        else{
+            deathFlag = false;
+            winFlag = false;
+            marioReset();
+            timer = 0;
+        }
+    }
+
+
+
 
     public void deathHandler(ArrayList<Barrel> barrels){
         if(!deathFlag){
