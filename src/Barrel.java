@@ -1,11 +1,8 @@
 import Util.Collision;
 import entities.Entity;
-import org.w3c.dom.css.Rect;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class Barrel extends Entity {
 
@@ -41,42 +38,52 @@ public class Barrel extends Entity {
 
     public void doBarrelPhysics(Rectangle[] platforms){
 
+        physics.doGravity();
+
+        boolean standing = physics.isStanding(Collision.isOnGround(hitbox, platforms));
+
         if(facingRight){
-            physics.setXAirSpeed(1);
+            physics.setXAirSpeed(2);
         }
-        else{
-            physics.setXAirSpeed(-1);
+        else {
+            physics.setXAirSpeed(-2);
         }
 
-        //this is needed or else the barrels go too fast
-        physics.setXAirSpeed(1);
+        if(standing){
+            for(Rectangle platform : platforms){
+                if(hitbox.intersects(platform)){
+                    setY(platform.y - hitbox.height);
+                    updateHitBox();
+                    break;
+                }
+            }
+            physics.stopPhysicsY();
+            physics.setAirborne(false);
+        }
+        else{
+            physics.setAirborne(true);
+        }
+
+        if(swapDirection(platforms)){
+            setFacingRight(!facingRight);
+        }
 
         float[] newPosition = physics.doPhysics(x, y);
         float newX = newPosition[0];
         float newY = newPosition[1];
 
-        swapDirection(platforms);
-
-        if(!physics.isStanding(Collision.isOnGround(hitbox, platforms)) && physics.getYAirSpeed() == 0){
-            physics.setXAirSpeed(0);
-            physics.setYAirSpeed(1);
-        }
-
-        float[] checkPosition = Collision.checkNewPos(newX, newY, physics, hitbox, platforms);
-
         setX(newX);
         setY(newY);
-
+        updateHitBox();
     }
 
-    public void swapDirection(Rectangle[] platforms){
+    public boolean swapDirection(Rectangle[] platforms){
         for(Rectangle platform : platforms){
             if(!hitbox.intersects(platform) && physics.getYAirSpeed() > 0){
-                setFacingRight(!facingRight);
-                physics.stopPhysicsY();
-                break;
+                return true;
             }
         }
+        return false;
     }
 
     public BufferedImage[] getAnimations() {

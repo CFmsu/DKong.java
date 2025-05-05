@@ -1,4 +1,4 @@
-import entities.Entity;
+import entities.Entity.*;
 import org.w3c.dom.css.Rect;
 
 import javax.lang.model.type.ArrayType;
@@ -81,7 +81,7 @@ public class LevelHandler {
     public void makeBarrel(float x, float y, int width, int height){
         barrels.add(new Barrel(x, y, width, height));
     }
-    //values needed for making new barrels at a set interval each update
+    //values are needed for making new barrels at a set interval each update
     public void updateBarrels(int x, int y, int width, int height) {
 
         Iterator<Barrel> i = barrels.iterator();

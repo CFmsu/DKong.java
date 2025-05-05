@@ -35,7 +35,7 @@ public class Game implements Runnable {
     private void initiateClasses() {
         levelHandler = new LevelHandler(this);
         levelHandler.makeAllRails();
-        levelHandler.makeBarrel(200, 100, 70, 60);
+        levelHandler.makeBarrel(200, 111, 70, 60);
         mario = new Mario(200, 905, 100, 100);
 
     }
@@ -50,7 +50,7 @@ public class Game implements Runnable {
     public void update() {
         Rectangle[] platforms = levelHandler.getPlatformList();
         mario.update(platforms);
-        levelHandler.updateBarrels(200, 100, 70, 60);
+        levelHandler.updateBarrels(200, 111, 70, 60);
         barrelTimer++;
     }
 

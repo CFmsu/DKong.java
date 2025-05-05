@@ -124,7 +124,7 @@ public class Mario extends Entity {
 
         x = newPosition[0];
         y = newPosition[1];
-        int moveSpeed = 1;
+        float moveSpeed = 1;
 
         if (move) {
             switch (playerDirection) {
@@ -134,6 +134,8 @@ public class Mario extends Entity {
 
                 case UP:
                     y -= moveSpeed;
+                    //this is a placeholder that will be used for climbing up ladders, for now it makes Mario fly
+                    physics.stopPhysicsY();
                     break;
 
                 case RIGHT:
@@ -151,7 +153,7 @@ public class Mario extends Entity {
 
     public void jump(){
         if(!physics.isAirborne()){
-            physics.jump(4F);
+            physics.jump(5F);
         }
     }
 
