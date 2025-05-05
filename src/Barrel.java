@@ -19,7 +19,7 @@ public class Barrel extends Entity {
     public void makeBarrelAnims(Graphics graphic) {
         if(barrelSprite == null) {
 
-            BufferedImage image = LoadSave.getSprites(LoadSave.playerSprites);
+            BufferedImage image = LoadSave.getSprites(LoadSave.mainSprites);
              barrelSprite = image.getSubimage(177, 155, 14, 10);
              barrelRoll = image.getSubimage(197, 155, 14, 10);
 
@@ -29,6 +29,8 @@ public class Barrel extends Entity {
     }
 
     public void drawBarrel(Graphics graphic){
+
+        makeBarrelAnims(graphic);
         if(animations != null && animations.length > 0){
             graphic.drawImage(animations[0], (int) getX(), (int) getY(), getWidth(), getHeight(), null);
             drawHitbox(graphic);

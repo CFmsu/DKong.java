@@ -66,6 +66,10 @@ public abstract class Entity {
         return height;
     }
 
+    public Physics getPhysics() {
+        return physics;
+    }
+
     public void setX(float x) {
         this.x = x;
     }

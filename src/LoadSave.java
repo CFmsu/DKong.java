@@ -5,9 +5,8 @@ import java.io.InputStream;
 
 public class LoadSave {
 
-    public static final String playerSprites = "sprites/mainSprites.png";
+    public static final String mainSprites = "sprites/mainSprites.png";
     public static final String levelSprites = "sprites/railSprites.png";
-    public static final String barrelSprites = "sprites/mainSprites.png";
 
     public static BufferedImage getSprites(String file) {
 

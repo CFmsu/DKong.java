@@ -18,16 +18,9 @@ public class KeyboardInputs implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         switch(e.getKeyCode()){
-            case KeyEvent.VK_W:
-                panel.getGame().getMario().setDirection(UP);
-                break;
 
             case KeyEvent.VK_A:
                 panel.getGame().getMario().setDirection(LEFT);
-                break;
-
-            case KeyEvent.VK_S:
-
                 break;
 
             case KeyEvent.VK_D:

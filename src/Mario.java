@@ -70,7 +70,7 @@ public class Mario extends Entity {
 
     private void loadAnims() {
 
-        BufferedImage spriteSheet = LoadSave.getSprites(LoadSave.playerSprites);
+        BufferedImage spriteSheet = LoadSave.getSprites(LoadSave.mainSprites);
 
         //I wanted to add all of these directly into a 2D array without initializing them all,
         // but there would be constant errors in console and sprites would never align properly.
@@ -207,7 +207,7 @@ public class Mario extends Entity {
         if(timer < stopper){
             graphic.setColor(Color.RED);
             graphic.setFont(new Font("Arial", Font.BOLD, 50));
-            graphic.drawString("You died!", 500, 500);
+            graphic.drawString("You died!", 600, 600);
             setPos(1000, -1000);
         }
         else{

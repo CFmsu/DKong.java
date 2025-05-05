@@ -39,6 +39,7 @@ public class Game implements Runnable {
         levelHandler.makeAllRails();
         levelHandler.makeBarrel(200, 120, 70, 60);
         mario = new Mario(200, 905, 100, 100);
+        levelHandler.makeAllSprings();
 
     }
 
@@ -53,6 +54,7 @@ public class Game implements Runnable {
         Rectangle[] platforms = levelHandler.getPlatformList();
         mario.update(platforms);
         levelHandler.updateBarrels(200, 120, 70, 60);
+        levelHandler.updateSprings();
 
     }
 
@@ -75,6 +77,7 @@ public class Game implements Runnable {
         levelHandler.drawAllRails(graphic);
         levelHandler.createAllPlatforms(graphic);
         levelHandler.drawAllBarrels(graphic);
+        levelHandler.drawAllSprings(graphic);
 
     }
 

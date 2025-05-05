@@ -13,7 +13,7 @@ public class LevelHandler {
     private Game game;
     private Rail rail;
     private BufferedImage railSprite, smallRailSprite;
-    private Barrel barrel;
+    private Spring spring;
     private int barrelTimer = 0;
     private int timeToMakeBarrel = 1400;
     private int msgTime = 0;
@@ -22,6 +22,7 @@ public class LevelHandler {
     private ArrayList<Barrel> barrels;
     private ArrayList<Rail> railList = new ArrayList<>();
     private ArrayList<Rectangle> platformList = new ArrayList<>();
+    private ArrayList<Spring> springList = new ArrayList<>();
 
 
     public LevelHandler(Game game) {
@@ -35,26 +36,36 @@ public class LevelHandler {
         railList.add(new Rail(-400, 750, 100, 100));
         railList.add(new Rail(400, 500, 100, 100));
         railList.add(new Rail(-200, 250, 100, 100));
-        railList.add(new Rail(-800, 70, 100, 100));
+        railList.add(new Rail(-800, 80, 100, 100));
 
+    }
+
+    public void makeAllSprings(){
+        springList.add(new Spring(850, 955, 50, 50));
+        springList.add(new Spring(300, 705, 50, 50));
+        springList.add(new Spring(1050, 455, 50, 50));
+        springList.add(new Spring(450, 205, 50, 50));
     }
 
     public void drawAllRails(Graphics graphic){
 
         for(Rail rail : railList){
-            rail.updateHitBox();
             rail.drawRail(graphic);
         }
     }
 
     public void drawAllBarrels(Graphics graphic){
         for(Barrel barrel : barrels){
-
-            barrel.makeBarrelAnims(graphic);
             barrel.drawBarrel(graphic);
-
         }
     }
+
+    public void drawAllSprings(Graphics graphic){
+        for(Spring spring : springList){
+            spring.drawSpring(graphic);
+        }
+    }
+
 
     //Invisible platforms for making sure entities are standing on them.
     public void createPlatform(Rail rail){
@@ -75,6 +86,7 @@ public class LevelHandler {
     public void makeBarrel(float x, float y, int width, int height){
         barrels.add(new Barrel(x, y, width, height));
     }
+
     //values are needed for making new barrels at a set interval each update
     public void updateBarrels(int x, int y, int width, int height) {
 
@@ -101,6 +113,18 @@ public class LevelHandler {
             barrelTimer = 0;
         }
     }
+
+    public void updateSprings(){
+        Mario mario = game.getMario();
+        for(Spring spring : springList){
+            if(spring.isMarioHere(mario)){
+                spring.doSpringJump(mario);
+                break;
+
+            }
+        }
+    }
+
 
     public Rail getRail() {
         return rail;
