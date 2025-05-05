@@ -1,8 +1,12 @@
 package entities;
 
+import Util.Collision;
+import Util.Physics;
+
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.lang.reflect.Array;
+import java.util.concurrent.RecursiveTask;
 
 public abstract class Entity {
 
@@ -10,6 +14,9 @@ public abstract class Entity {
     protected final int height;
     protected float x, y;
     protected Rectangle hitbox;
+    protected Physics physics;
+    protected static  final float pit = 1000;
+
 
     public Entity(float x, float y, int width, int height){
         this.x = x;
@@ -26,6 +33,14 @@ public abstract class Entity {
 
     public void updateHitBox(){
         hitbox.setBounds((int)x, (int)y, width, height);
+    }
+
+    public static boolean pitFallCheck(int y){
+        if(y > pit) {
+            System.out.println("Something fell into the pit");
+            return true;
+        }
+        return false;
     }
 
     public Rectangle getHitbox(){

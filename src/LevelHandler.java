@@ -87,7 +87,7 @@ public class LevelHandler {
         while(i.hasNext()){
 
             Barrel barrel = i.next();
-            barrel.setY(barrel.getY() + 5);
+            //barrel.setY(barrel.getY() + 5);
             barrel.updateHitBox();
 
         }

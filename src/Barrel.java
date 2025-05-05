@@ -29,6 +29,7 @@ public class Barrel extends Entity {
     public void drawBarrel(Graphics graphic){
         if(animations != null && animations.length > 0){
             graphic.drawImage(animations[0], (int) getX(), (int) getY(), getWidth(), getHeight(), null);
+            drawHitbox(graphic);
         }
     }
 

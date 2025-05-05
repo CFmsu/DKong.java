@@ -21,14 +21,10 @@ public class Mario extends Entity {
     private int [][] lvlData;
     private boolean facingRight = true;
 
-    private Physics physics;
-    private static  final float pit = 1000;
-
 
     public Mario(float x, float y, int width, int height) {
         super(x, y, width, height);
         loadAnims();
-
         physics = new Physics();
     }
 
@@ -47,8 +43,8 @@ public class Mario extends Entity {
         updateHitBox();
 
         //logic for Mario falling into pit. Placeholder for now as it isn't a top priority
-        if(y > pit){
-            System.out.println("\nMario fall death placeholder");
+        if(pitFallCheck((int) y)){
+            System.out.println("\nMario fell to his death");
             x = 200;
             y = 905;
 
