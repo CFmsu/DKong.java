@@ -46,14 +46,14 @@ public class Collision {
                     tempY = tempPlatform.y + tempPlatform.height;
                     physics.setYAirSpeed(0);
                     physics.setAirborne(true);
-                    return new float[]{tempX, tempY};
                 }
             }
             else{
                 physics.setAirborne(true);
             }
         }
-
         return new float[]{tempX, tempY};
     }
+
+
 }
