@@ -14,6 +14,8 @@ public class LevelHandler {
     private BufferedImage railSprite, smallRailSprite;
     private Barrel barrel;
     private Level level;
+    int barrelTimer = 0;
+    int timeToMakeBarrel = 1200;
 
     private ArrayList<Barrel> barrels;
     private ArrayList<Rail> railList = new ArrayList<>();
@@ -77,19 +79,23 @@ public class LevelHandler {
     }
 
     public void makeBarrel(float x, float y, int width, int height){
-        Barrel newBarrel = new Barrel(x, y, width, height);
-        barrels.add(newBarrel);
+        barrels.add(new Barrel(x, y, width, height));
     }
-
-    public void updateBarrels() {
+    //values needed for making new barrels at a set interval
+    public void updateBarrels(int x, int y, int width, int height) {
 
         Iterator<Barrel> i = barrels.iterator();
         while(i.hasNext()){
 
             Barrel barrel = i.next();
-            //barrel.setY(barrel.getY() + 5);
+            barrel.doBarrelPhysics(getPlatformList());
             barrel.updateHitBox();
 
+        }
+        barrelTimer++;
+        if(barrelTimer >= timeToMakeBarrel){
+            makeBarrel(x, y, width, height);
+            barrelTimer = 0;
         }
     }
 

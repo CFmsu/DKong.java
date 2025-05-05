@@ -1,4 +1,6 @@
+import Util.Collision;
 import entities.Entity;
+import org.w3c.dom.css.Rect;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -10,8 +12,11 @@ public class Barrel extends Entity {
     private BufferedImage barrelSprite, barrelRoll;
     private BufferedImage[] animations;
 
+
     public Barrel(float x, float y, int width, int height) {
         super(x, y, width, height);
+
+        physics.setAirborne(true);
     }
 
     public void makeBarrelAnims(Graphics graphic) {
@@ -33,7 +38,28 @@ public class Barrel extends Entity {
         }
     }
 
+    public void doBarrelPhysics(Rectangle[] platforms){
+
+        physics.setXAirSpeed(1);
+
+        float[] newPosition = physics.doPhysics(x, y);
+        float newX = newPosition[0];
+        float newY = newPosition[1];
+
+        float[] checkPosition = Collision.checkNewPos(newX, newY, physics, hitbox, platforms);
+        if(!physics.isStanding(Collision.isOnGround(hitbox, platforms)) && physics.getYAirSpeed() == 0){
+            physics.setXAirSpeed(0);
+            physics.setYAirSpeed(1);
+        }
+
+        setX(newX);
+        setY(newY);
+
+    }
+
     public BufferedImage[] getAnimations() {
         return animations;
     }
+
+
 }

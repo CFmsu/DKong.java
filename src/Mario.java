@@ -25,7 +25,6 @@ public class Mario extends Entity {
     public Mario(float x, float y, int width, int height) {
         super(x, y, width, height);
         loadAnims();
-        physics = new Physics();
     }
 
     public void update(Rectangle[] platforms) {

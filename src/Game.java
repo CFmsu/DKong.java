@@ -9,6 +9,8 @@ public class Game implements Runnable {
     private final int ups = 200;
     private Mario mario;
     private LevelHandler levelHandler;
+    private int barrelTimer = 0;
+    private int timeToMakeBarrel = 10;
     //Below attributes calculate the size of a window as a grid to make placing entities easier
     public final static int tileStartSize = 32;
     public final static float tileScale = 1.5F;
@@ -33,7 +35,7 @@ public class Game implements Runnable {
     private void initiateClasses() {
         levelHandler = new LevelHandler(this);
         levelHandler.makeAllRails();
-        levelHandler.makeBarrel(200, 195, 70, 60);
+        levelHandler.makeBarrel(200, 100, 70, 60);
         mario = new Mario(200, 905, 100, 100);
 
     }
@@ -48,7 +50,8 @@ public class Game implements Runnable {
     public void update() {
         Rectangle[] platforms = levelHandler.getPlatformList();
         mario.update(platforms);
-        levelHandler.updateBarrels();
+        levelHandler.updateBarrels(200, 100, 70, 60);
+        barrelTimer++;
     }
 
     public void render(Graphics graphic) {

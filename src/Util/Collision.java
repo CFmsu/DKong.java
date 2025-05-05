@@ -26,11 +26,8 @@ public class Collision {
         float tempX = x;
         float tempY = y;
 
-        if(physics.getXAirSpeed() != 0){
-            tempHitbox.x = (int) (x + physics.getXAirSpeed());
-            tempX = tempHitbox.x;
-
-        }
+        tempHitbox.x = (int) (x + physics.getXAirSpeed());
+        tempX = tempHitbox.x;
 
         if(physics.getYAirSpeed() != 0){
             tempHitbox.y = (int) (y + physics.getYAirSpeed());

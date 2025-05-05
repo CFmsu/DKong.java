@@ -24,6 +24,8 @@ public abstract class Entity {
         this.width = width;
         this.height = height;
 
+        physics = new Physics();
+
         hitbox = new Rectangle((int) x, (int) y, width, height);
     }
 

@@ -1,7 +1,5 @@
 package Util;
 
-import java.awt.*;
-
 public class Physics {
 
     private float gravity = 0.2F;
@@ -53,7 +51,7 @@ public class Physics {
         }
     }
 
-    public void isStanding(boolean standing){
+    public boolean isStanding(boolean standing){
         if(standing) {
 
             airborne = false;
@@ -65,6 +63,7 @@ public class Physics {
         else{
             airborne = true;
         }
+        return standing;
     }
 
     public float getXAirSpeed() {
