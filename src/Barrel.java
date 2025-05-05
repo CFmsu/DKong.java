@@ -42,10 +42,10 @@ public class Barrel extends Entity {
         boolean standing = physics.isStanding(Collision.isOnGround(hitbox, platforms));
 
         if(facingRight){
-            physics.setXAirSpeed(2);
+            physics.setXAirSpeed(3);
         }
         else {
-            physics.setXAirSpeed(-2);
+            physics.setXAirSpeed(-3);
         }
 
         //if the barrel is on the ground, it's forced to "hug" the platform until it falls down

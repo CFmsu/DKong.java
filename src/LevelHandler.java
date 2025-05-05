@@ -1,4 +1,4 @@
-import entities.Entity.*;
+import entities.Entity;
 import org.w3c.dom.css.Rect;
 
 import javax.lang.model.type.ArrayType;

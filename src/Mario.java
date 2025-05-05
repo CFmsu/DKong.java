@@ -45,7 +45,11 @@ public class Mario extends Entity {
             System.out.println("\nMario fell to his death");
             x = 200;
             y = 900;
+        }
 
+        //When jumping, Mario gets a small speed boost to help jump over barrels. After he jumps, this sets Mario's X speed back to normal
+        if(!isAirborne()){
+            physics.setXAirSpeed(0F);
         }
 
     }
@@ -80,13 +84,13 @@ public class Mario extends Entity {
         int width = 18;
         int height = 20;
 
-        //these animations are coded in the order that they occur in on the sprite sheet, excluding idle because it needs the jump sprites.
+        //these animations are coded in the order that they occur in on the sprite sheet, excluding idle because it needs the running sprites.
 
         for (int i = 0; i < moveAnim.length; i++) {
             moveAnim[i] = spriteSheet.getSubimage(i * 19, 128, width -1, height -2);
         }
 
-        BufferedImage[] idle = new BufferedImage[]{moveAnim[0]}; //The idle sprite is the same sprite as the first sprite in the moving animation
+        BufferedImage[] idle = new BufferedImage[]{moveAnim[0]};
 
         for (int i = 0; i < climbAnim.length; i++) {
             climbAnim[i] = spriteSheet.getSubimage(i * 20, 150, width, height);
@@ -105,8 +109,6 @@ public class Mario extends Entity {
         for (int i = 0; i < dieAnim.length; i++) {
             dieAnim[i] = spriteSheet.getSubimage(i * 21, 236, width, height);
         }
-
-        //directly putting all animations into 2D array
 
         animations = new BufferedImage[][]{idle, moveAnim, climbAnim, jump, hammerJumpAnim, hammerAnim, dieAnim};
 
@@ -153,7 +155,15 @@ public class Mario extends Entity {
 
     public void jump(){
         if(!physics.isAirborne()){
-            physics.jump(5F);
+            physics.jump(4.5F);
+
+            //Gives mario a small boost when jumping to help with jumping over barrels
+            if(facingRight){
+                physics.setXAirSpeed(.5F);
+            }
+            else{
+                physics.setXAirSpeed(-.5F);
+            }
         }
     }
 
