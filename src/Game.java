@@ -10,6 +10,7 @@ public class Game implements Runnable {
     private final int fps = 120;
     private final int ups = 200;
     private Mario mario;
+    private DK kong;
     private LevelHandler levelHandler;
     private int msgTimer = 0;
     private int msgStop = 450;
@@ -37,10 +38,13 @@ public class Game implements Runnable {
     private void initiateClasses() {
         levelHandler = new LevelHandler(this);
         levelHandler.makeAllRails();
-        levelHandler.makeBarrel(200, 120, 70, 60);
-        mario = new Mario(200, 905, 100, 100);
         levelHandler.makePaul(100, -10, 80, 100);
         levelHandler.makeAllSprings();
+        levelHandler.makeBarrel(200, 120, 70, 60);
+
+        mario = new Mario(200, 905, 100, 100);
+        kong = new DK(110, 120, 160, 140);
+
 
 
     }
@@ -67,10 +71,10 @@ public class Game implements Runnable {
             msgTimer++;
             mario.drawMarioWin(graphic, msgTimer, msgStop);
             levelHandler.eraseBarrels();
-
+            kong.setEmotion(2);
             //coordinates spawning the first new barrel with when the message screen stops
             levelHandler.setBarrelTimer(1200);
-            if(!mario.winFlag){
+            if(msgTimer >= msgStop){
                 mario.marioReset();
             }
         }
@@ -78,19 +82,23 @@ public class Game implements Runnable {
         if(mario.deathFlag){
             msgTimer++;
             mario.marioReset();
+            kong.setEmotion(1);
             levelHandler.eraseBarrels();
             mario.drawMarioDeath(graphic, msgTimer, msgStop);
 
             levelHandler.setBarrelTimer(1200);
         }
 
-        //if this is removed, death messages won't appear for dying to barrels after the first death message
+        //if msgTimer = 0 is removed from here, death messages won't appear for dying to barrels after the first death message
         if(!mario.deathFlag && !mario.winFlag){
             msgTimer = 0;
+            kong.setEmotion(0);
         }
 
         mario.render(graphic);
+        kong.drawKongSprite(graphic);
         levelHandler.drawPauline(graphic);
+
         levelHandler.drawAllRails(graphic);
         levelHandler.createAllPlatforms(graphic);
         levelHandler.drawAllBarrels(graphic);
