@@ -87,9 +87,6 @@ public class LevelHandler {
             createPlatform(rail);
         }
 
-        for(Rectangle platform : platformList){
-            graphic.drawRect(platform.x, platform.y, platform.width, platform.height);
-        }
     }
 
     public void makeBarrel(float x, float y, int width, int height){

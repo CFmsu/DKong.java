@@ -23,7 +23,6 @@ public class Pauline extends Entity {
     public void drawPaul(Graphics graphic){
         makePaulSprite();
         graphic.drawImage(paulSprite, (int) getX(), (int) getY(), getWidth(), getHeight(), null);
-        drawHitbox(graphic);
     }
 
     public void isMarioHere(Mario mario){

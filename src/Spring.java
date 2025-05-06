@@ -23,7 +23,6 @@ public class Spring extends Entity {
     public void drawSpring(Graphics graphic){
         makeSpringSprite();
         graphic.drawImage(springSprite, (int) getX(), (int) getY(), getWidth(), getHeight(), null);
-        drawHitbox(graphic);
     }
 
     public boolean isMarioHere(Mario mario){

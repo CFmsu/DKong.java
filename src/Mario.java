@@ -63,7 +63,6 @@ public class Mario extends Entity {
             graphic.drawImage(currentFrame, (int) (x), (int) (y), width, height, null);
         }
 
-       drawHitbox(graphic);
     }
 
     private void loadAnims() {
