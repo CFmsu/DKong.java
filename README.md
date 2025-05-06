@@ -15,3 +15,5 @@ The spritesheet used for this project was sourced from the Spriter's Resource we
 The sprite for the rails were created by me taking a screenshot of them from the original Donkey Kong game, which is probably why it's a little fuzzy looking.
 
 Nintendo owns all copyrights to Donkey Kong and Super Mario, and I take no ownership of their IP's. This is only a project that I've completed for a college course.
+
+One more thing: There's an inconsistent bug where Mario will immediately die upon opening the game. This doesn't happen very often and I don't understand what causes it, but it doesn't impact anything. All it does is make you wait for a few seconds.
