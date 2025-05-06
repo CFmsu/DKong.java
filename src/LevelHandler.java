@@ -15,7 +15,7 @@ public class LevelHandler {
     private BufferedImage railSprite, smallRailSprite;
     private Spring spring;
     private int barrelTimer = 0;
-    private int timeToMakeBarrel = 1400;
+    private int timeToMakeBarrel = 1300;
     private int msgTime = 0;
     private int msgStop = 1000;
 
@@ -137,6 +137,12 @@ public class LevelHandler {
     public void updatePauline(){
         pauline.isMarioHere(game.getMario());
 
+    }
+    //updateBarrels gets rid of barrels when they fall below y = 1000, so this fully deletes them.
+    public void eraseBarrels(){
+        for(Barrel barrel : barrels){
+            barrel.setPos(9999, 999);
+        }
     }
 
 

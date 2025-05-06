@@ -66,18 +66,21 @@ public class Game implements Runnable {
         if(mario.winFlag){
             msgTimer++;
             mario.drawMarioWin(graphic, msgTimer, msgStop);
+            levelHandler.eraseBarrels();
+
+            //coordinates spawning the first new barrel with when the message screen stops
+            levelHandler.setBarrelTimer(1200);
             if(!mario.winFlag){
-                mario.marioReset(levelHandler.getBarrels());
+                mario.marioReset();
             }
-
-
         }
 
         if(mario.deathFlag){
             msgTimer++;
-            mario.marioReset(levelHandler.getBarrels());
+            mario.marioReset();
+            levelHandler.eraseBarrels();
             mario.drawMarioDeath(graphic, msgTimer, msgStop);
-            //coordinates spawning the first new barrel with when the death screen stops
+
             levelHandler.setBarrelTimer(1200);
         }
 

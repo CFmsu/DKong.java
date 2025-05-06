@@ -17,6 +17,11 @@ public class KeyboardInputs implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+
+        //disables movement during the win message
+        if(panel.getGame().getMario().winFlag){
+            return;
+        }
         switch(e.getKeyCode()){
 
             case KeyEvent.VK_A:

@@ -179,18 +179,6 @@ public class Mario extends Entity {
         setPos(200, 905);
     }
 
-    public void marioReset(ArrayList<Barrel> barrels){
-        //Resets the position of Mario and forces barrel deletion, simulating a level restart
-        //will not raise death flag because level also resets on win
-        marioReset();
-        for(Entity barrel : barrels){
-            if(deathFlag){
-                barrel.setPos(9999, -1000);
-            }
-        }
-
-    }
-
     public void drawMarioDeath(Graphics graphic, int timer, int stopper){
         if(timer < stopper){
             graphic.setColor(Color.RED);
@@ -220,12 +208,9 @@ public class Mario extends Entity {
         }
     }
 
-
-
-
     public void deathHandler(ArrayList<Barrel> barrels){
         if(!deathFlag){
-            marioReset(barrels);
+            marioReset();
             deathFlag = true;
         }
     }
