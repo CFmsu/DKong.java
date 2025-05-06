@@ -105,7 +105,6 @@ public class LevelHandler {
 
             if(barrel.pitFallCheck((int)barrel.getY(), getPlatformList())){
                 i.remove();
-                System.out.println("Barrel removed");
             }
 
             if(Collision.checkEntCollision(game.getMario(), barrel)){

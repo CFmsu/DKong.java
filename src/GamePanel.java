@@ -10,20 +10,15 @@ import static Util.Constant.PlayerConstants.Directions.*;
 
 public class GamePanel extends JPanel {
 
-    private MouseInputs mouse;
     private KeyboardInputs keys;
     private Game game;
 
 
     public GamePanel(Game game){
         this.game = game;
-        mouse = new MouseInputs(this);
         keys = new KeyboardInputs(this);
-        setWinSize();
-
         addKeyListener(keys);
-        addMouseListener(mouse);
-        addMouseMotionListener(mouse);
+        setWinSize();
 
     }
 

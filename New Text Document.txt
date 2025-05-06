@@ -1,7 +1,0 @@
-This is build 2 of donkey kong. It focuses on creating the level, which is composed of five
-long rails and a short rail as the platform for Pauline.
-
-Also began setting up hitboxes for collision, but actual collision 
-detection has yet to be implemented.
-
-This build has the hitboxes visible for debugging purposes but will be removed later.

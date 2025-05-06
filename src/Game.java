@@ -42,7 +42,7 @@ public class Game implements Runnable {
         levelHandler.makeAllSprings();
         levelHandler.makeBarrel(200, 120, 70, 60);
 
-        mario = new Mario(200, 905, 100, 100);
+        mario = new Mario(200, 880, 100, 100);
         kong = new DK(110, 120, 160, 140);
 
 
@@ -66,6 +66,9 @@ public class Game implements Runnable {
     }
 
     public void render(Graphics graphic) {
+
+        graphic.setColor(Color.BLACK);
+        graphic.fillRect(0,0, gameWidth, gameHeight);
 
         if(mario.winFlag){
             msgTimer++;
